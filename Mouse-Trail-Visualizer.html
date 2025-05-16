@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鼠标轨迹显示</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="trailCanvas"></canvas>
+    <script>
+        const canvas = document.getElementById('trailCanvas');
+        const ctx = canvas.getContext('2d');
+        const trailPoints = [];
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        function handleMouseMove(event) {
+            const x = event.clientX;
+            const y = event.clientY;
+            trailPoints.push({ x, y, time: Date.now() });
+        }
+
+        function drawTrail() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const now = Date.now();
+            for (let i = 0; i < trailPoints.length; i++) {
+                const point = trailPoints[i];
+                const age = now - point.time;
+                if (age > 400) {
+                    trailPoints.splice(i, 1);
+                    i--;
+                    continue;
+                }
+                const alpha = 1 - (age / 2000);
+
+                const timeFactor = (now + age) / 500;
+                const r = Math.floor((Math.sin(timeFactor) + 1) * 127.5);
+                const g = Math.floor((Math.sin(timeFactor + 2 * Math.PI / 3) + 1) * 127.5);
+                const b = Math.floor((Math.sin(timeFactor + 4 * Math.PI / 3) + 1) * 127.5);
+
+                ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
+                ctx.lineWidth = 3;
+                ctx.lineCap = 'round';
+                ctx.shadowBlur = 9;
+                ctx.shadowColor = `rgba(${r}, ${g}, ${b}, ${alpha})`;
+                ctx.beginPath();
+                if (i > 0) {
+                    const prevPoint = trailPoints[i - 1];
+                    ctx.moveTo(prevPoint.x, prevPoint.y);
+                    ctx.lineTo(point.x, point.y);
+                } else {
+                    ctx.moveTo(point.x, point.y);
+                }
+                ctx.stroke();
+            }
+            requestAnimationFrame(drawTrail);
+        }
+
+        document.addEventListener('mousemove', handleMouseMove);
+        drawTrail();
+    </script>
+</body>
+
+</html>
