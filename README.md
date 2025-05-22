@@ -2,6 +2,10 @@
 # Mouse Trail Visualizer  
 
 ## Introduction  
+**[Online demonstration(click to access)](https://www.rockaz.top/GitHub-Project-Demo/Mouse-Trail-Visualizer)**
+*But the website server is located in China*
+
+
 A lightweight HTML5 Canvas project that visualizes mouse movement trajectories in real time. When users move the mouse on the page, it generates dynamic, colorful trails with fading effects, creating an intuitive and visually appealing cursor interaction feedback. The trails automatically fade out over time, and the canvas adapts to window size changes.  
 
 ## Features  
@@ -32,6 +36,8 @@ Adjust parameters in the JavaScript code to modify the effect:
 # 鼠标轨迹可视化工具  
 
 ## 项目简介  
+**[在线演示(点击访问)](https://www.rockaz.top/GitHub-Project-Demo/Mouse-Trail-Visualizer)**
+
 一个轻量级HTML5 Canvas项目，用于实时可视化鼠标移动轨迹。当用户在页面移动鼠标时，会生成动态彩色轨迹并伴随淡化效果，提供直观的光标交互视觉反馈。轨迹随时间自动淡出，画布支持窗口尺寸自适应。  
 
 ## 功能特性  
